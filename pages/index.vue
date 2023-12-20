@@ -104,9 +104,9 @@ onMounted(() => {
 
 <template >
   <main class=" bg-[#fafafa] h-screen  h-dvh w-full flex flex-row">
-    <header class="fixed top-0 left-0 right-0 h-20 bg-red-500 z-50"> </header>
+    <header class="fixed top-0 left-0 right-0 h-20 z-50 border-b-2 border-gray-300 bg-[#fafafa]"> </header>
     <!-- Starter Window  with TODO: Prompt templates-->
-    <div class="w-1/3 bg-green-500 flex flex-col pt-20">
+    <div class="w-1/3 border-r-2 border-gray-300 flex flex-col pt-20">
       <div class=" mt-20 flex flex-col content-stretch justify-start" id="prompt-templates"
         v-if="onlyUserAndAssistant.length <= 0">
         <button v-for="template in promptTemplates" class="pre-wrap text-start mx-20  my-5" @click="handleClick"> <strong
@@ -120,7 +120,7 @@ onMounted(() => {
     <!-- Chat History: -->
     <div class="flex flex-col w-2/3 px-40 pt-60 pb-24 mx-auto stretch overflow-y-scroll">
       <div v-for="m in onlyUserAndAssistant" key="m.id"
-        class="[&>ul]:leading-6 [&>ul]:list-disc [&>ol]:leading-6 [&>ol]:list-decimal [&>*]:mb-2"
+        class="[&>ul]:leading-6 [&>ul]:list-disc [&>ol]:leading-6 [&>ol]:list-decimal[&>h3]:text-xl [&>h3]:font-bold  [&>*]:mb-2 "
         :style="{ color: roleToColorMap[m.role] }" v-html="parseMarkdown(m.role, m.content)">
       </div>
       <!-- Input -->
