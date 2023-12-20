@@ -1,10 +1,12 @@
 <script setup lang="ts">
-// imports 
+// imports ------------------------------------------------------------------------------------
 import { useChat } from 'ai/vue';
 import { nanoid } from 'ai';
+import { marked } from 'marked';
+import DOMPurify from 'dompurify'
 import type { FunctionCallHandler, Message } from 'ai';
 import type { DatabaseResponse, Input } from '../types';
-
+//methods ------------------------------------------------------------------------------------
 const querryDataBase = async (_input: Input) => {
   if (!_input.queryTexts) throw new Error('no input provided')
   const response = await useFetch('/api/database', {
@@ -54,7 +56,7 @@ const roleToColorMap: Record<Message['role'], string> = {
   assistant: 'green',
   data: 'orange',
 };
-onMounted(async () => {
+const startSystemMessages = () => {
   messages.value.push({
     id: nanoid(),
     role: 'system',
@@ -65,19 +67,39 @@ onMounted(async () => {
     role: 'system',
     content: 'talk like a all knowing music database, dont say to the user you are searching one. Query more that you need and then filter the results',
   });
+  messages.value.push({
+    id: nanoid(),
+    role: 'system',
+    content: 'Structure your answers in markdown',
+  });
+}
+const onlyUserAndAssistant = computed(() => {
+  let filtered = messages.value.filter(m => m.role === 'user' || m.role === 'assistant')
+  filtered = filtered.filter(m => !m.function_call)
+  return filtered
+})
+const parseMarkdown = (role: string, content: string) => {
+  const combined = `**${role}**: ${content}`
+  const markdown = marked.parse(combined) as string
+  return DOMPurify.sanitize(markdown)
+}
+
+//lifecycle ------------------------------------------------------------------------------------
+onMounted(async () => {
+  startSystemMessages()
 })
 
 </script>
 
 <template>
   <div class="flex flex-col w-full max-w-md py-24 mx-auto stretch">
-    <div v-for="m in messages" key="m.id" class="whitespace-pre-wrap" :style="{ color: roleToColorMap[m.role] }">
-      <strong>{{ m.role }}:</strong>
-      {{ m.content || JSON.stringify(m.function_call) }}
-      <br />
-      <br />
-    </div>
+    <div v-for="m in onlyUserAndAssistant" key="m.id"
+      class="[&>ul]:leading-6 [&>ul]:list-disc [&>ul]:list-inside [&>ol]:leading-6 [&>ol]:list-decimal [&>*]:mb-2"
+      :style="{ color: roleToColorMap[m.role] }" v-html="parseMarkdown(m.role, m.content)">
 
+
+
+    </div>
     <form @submit="handleSubmit">
       <input class="fixed bottom-0 w-full max-w-md p-2 mb-8 border border-gray-300 rounded shadow-xl" v-model="input"
         placeholder="Say something..." />
