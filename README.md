@@ -1,47 +1,65 @@
-# Vercel AI SDK, Nuxt and OpenAI Chat Example
+# RAISE DATABASE CHATBOT
 
-This example shows how to use the [Vercel AI SDK](https://sdk.vercel.ai/docs) with [Nuxt](https://nuxt.com/), and [OpenAI](https://openai.com) to create a ChatGPT-like AI-powered streaming chat bot.
+this Chatbot uses [OpenAIs ChatGPT API](https://github.com/openai/openai-node/blob/master/api.md) to query a [Chroma Vector Database](https://docs.trychroma.com/).
+It is build with the [Vercel AI SDK](https://github.com/vercel/ai) and [Nuxt](https://nuxt.com/) and [Tailwind](https://tailwindcss.com/) for styling.
 
-## Deploy your own
+## how it works
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=ai-sdk-example):
+It uses the feature [function-calling](https://platform.openai.com/docs/guides/function-calling) to enable the model to query the Database with the `querryDataBase()`function. The model can give it own inputs to the function. The function is described in a json schema:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fai%2Ftree%2Fmain%2Fexamples%2Fnuxt-openai&env=NUXT_OPENAI_API_KEY&envDescription=OpenAI%20API%20Key&envLink=https%3A%2F%2Fplatform.openai.com%2Faccount%2Fapi-keys&project-name=ai-chat&repository-name=nuxt-ai-chat)
-
-## How to use
-
-Execute `nuxi` to bootstrap the example:
-
-```bash
-npx nuxi@latest init -t github:vercel/ai/examples/nuxt-openai nuxt-openai
+```JS
+{
+    name: 'querryDataBase',
+    description:
+      'querrys the vector database of music production plugins that work with ai. to find the nearest neighbors to the query text',
+    parameters: {
+      type: 'object',
+      properties: {
+        queryTexts: {
+          type: 'string',
+          description:
+            'The text to search for in the database. It retrieves the nearest neighbors to this text. The results could be not specifially what the user wants'
+        },
+        nResults: {
+          type: 'number',
+          description: 'The number of results to return, if not specified 5'
+        }
+      },
+      required: ['queryTexts']
+    }
+  }
 ```
 
-To run the example locally you need to:
+## Chroma DB
 
-1. Sign up at [OpenAI's Developer Platform](https://platform.openai.com/signup).
-2. Go to [OpenAI's dashboard](https://platform.openai.com/account/api-keys) and create an API KEY.
-3. Set the required OpenAI environment variable as the token value as shown [the example env file](./.env.example) but in a new file called `.env`.
-4. `pnpm install` to install the required dependencies.
-5. `pnpm dev` to launch the development server.
+The ChromaDB runs in a Docker Container. The Image is from the Chroma Github Repository as specified in this [Guide](https://docs.trychroma.com/deployment)
+The Chroma SDK is used in the [api/database.ts](./api/database.ts) file to query the database.
 
-## Deploy to Vercel
+## To Run
 
-This example can be directly deployed to Vercel, you can run the following commands:
+You need to add your OpenAI API key, a link to your chromadb and the collection name to your .env file. then run:
+
+```bash
+pnpm install
+pnpm run dev
+```
+
+If you dont have pnpm installed you can use npm instead or install it from [pnpm.io](https://pnpm.io/)
+
+## Deploy
+
+You can deploy it to vercel with:
 
 ```bash
 pnpm run build
 vercel deploy
 ```
 
-This example is configured to use the `vercel-edge` [[Nitro preset](https://nitro.unjs.io/deploy/providers/vercel#vercel-edge-functions).
-This means that the example will be deployed to Vercel's Edge Network.
-You can use different providers, such as `vercel` by modifying your `nuxt.config.ts` file, or using the `NITRO_PRESET` environment variable.
+## Datastructure
 
-## Learn More
+the app is organised with the homepage in `./pages/index.vue`
+the api calls are made on the server in `./server/api/database.ts` and `./server/api/chat-with-functions.ts`
 
-To learn more about OpenAI, Nuxt, and the Vercel AI SDK take a look at the following resources:
+## TODO:
 
-- [Vercel AI SDK docs](https://sdk.vercel.ai/docs) - learn mode about the Vercel AI SDK
-- [Vercel AI Playground](https://play.vercel.ai) - compare and tune 20+ AI models side-by-side
-- [OpenAI Documentation](https://platform.openai.com/docs) - learn about OpenAI features and API.
-- [Nuxt Documentation](https://nuxt.com/docs) - learn about Nuxt features and API.
+Add favicon and images to public folder and load them inside the nuxt app
