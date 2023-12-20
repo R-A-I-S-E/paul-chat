@@ -1,11 +1,10 @@
 <script setup lang="ts">
+// imports 
 import { useChat } from 'ai/vue';
 import { nanoid } from 'ai';
 import type { FunctionCallHandler, Message } from 'ai';
-interface Input {
-  queryTexts: string;
-  nResults: number;
-}
+import type { DatabaseResponse, Input } from '../types';
+
 const querryDataBase = async (_input: Input) => {
   if (!_input.queryTexts) throw new Error('no input provided')
   const response = await useFetch('/api/database', {
@@ -13,8 +12,9 @@ const querryDataBase = async (_input: Input) => {
       'Content-Type': 'application/json',
     }, body: JSON.stringify({ queryTexts: _input.queryTexts, nResults: _input.nResults })
 
-  })
-  // return await response?.data?.value["response"]["documents"]
+  }) as { data: { value: DatabaseResponse } }
+  console.log(response.data.value)
+
   return response?.data?.value?.["response"]["documents"]
 };
 const functionCallHandler: FunctionCallHandler = async (
@@ -24,10 +24,7 @@ const functionCallHandler: FunctionCallHandler = async (
   if (functionCall.name === 'querryDataBase') {
     if (functionCall.arguments) {
       // Parsing here does not always work since it seems that some characters in generated code aren't escaped properly.
-      // const parsedFunctionCallArguments = JSON.parse(functionCall.arguments);
       const res = await querryDataBase(JSON.parse(functionCall.arguments))
-
-      console.log(res)
       const functionResponse = {
         messages: [
           ...chatMessages,
@@ -35,7 +32,7 @@ const functionCallHandler: FunctionCallHandler = async (
             id: nanoid(),
             name: 'querryDataBase',
             role: 'function' as const,
-            content: JSON.stringify(res),
+            content: res.join('\n'),
           },
         ],
       };
