@@ -17,7 +17,7 @@ const querryDataBase = async (_input: Input) => {
     }, body: JSON.stringify({ queryTexts: _input.queryTexts, nResults: _input.nResults })
 
   }) as { data: { value: DatabaseResponse } }
-  console.log(response.data.value)
+
 
   return response?.data?.value?.["response"]["documents"]
 };
@@ -89,7 +89,6 @@ onMounted(() => {
 <template >
   <main class=" bg-gray-100 dark:bg-gray-900 h-screen  h-dvh w-full flex flex-row">
     <Header />
-
     <LeftDrawer @clicked="append({ content: $event, role: 'user' })" :show-templates="onlyUserAndAssistant.length <= 0" />
     <!-- Chat History: -->
     <div class="relative flex flex-col w-2/3 px-40 pt-60 pb-24 mx-auto stretch overflow-y-scroll">
