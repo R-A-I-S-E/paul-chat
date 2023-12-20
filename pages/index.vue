@@ -7,10 +7,7 @@ import DOMPurify from 'dompurify'
 import type { FunctionCallHandler, Message } from 'ai';
 import type { DatabaseResponse, Input } from '../types';
 //data------------------------------------------------------------------------------------
-const promptTemplates = ref([
-  ["List some tools for sound generation", "to create drum patterns and percussion"], ["Are there any cheap plugins", "for pitch correction and vocal processing"],
-  ["Could you recommend a tool", "for noise reduction"]
-])
+
 //methods ------------------------------------------------------------------------------------
 const querryDataBase = async (_input: Input) => {
   if (!_input.queryTexts) throw new Error('no input provided')
@@ -103,30 +100,21 @@ onMounted(() => {
 </script>
 
 <template >
-  <main class=" bg-[#fafafa] h-screen  h-dvh w-full flex flex-row">
-    <header class="fixed top-0 left-0 right-0 h-20 z-50 border-b-2 border-gray-300 bg-[#fafafa]"> </header>
-    <!-- Starter Window  with TODO: Prompt templates-->
-    <div class="w-1/3 border-r-2 border-gray-300 flex flex-col pt-20">
-      <div class=" mt-20 flex flex-col content-stretch justify-start" id="prompt-templates"
-        v-if="onlyUserAndAssistant.length <= 0">
-        <button v-for="template in promptTemplates" class="pre-wrap text-start mx-20  my-5" @click="handleClick"> <strong
-            class="w-full">{{
-              template[0] }}</strong>
-          <br>
-          {{ template[1] }}
-        </button>
-      </div>
-    </div>
+  <main class=" bg-gray-100 dark:bg-gray-900 h-screen  h-dvh w-full flex flex-row">
+    <Header />
+
+    <LeftDrawer @clicked="append({ content: $event, role: 'user' })" :show-templates="onlyUserAndAssistant.length <= 0" />
     <!-- Chat History: -->
-    <div class="flex flex-col w-2/3 px-40 pt-60 pb-24 mx-auto stretch overflow-y-scroll">
+    <div class="relative flex flex-col w-2/3 px-40 pt-60 pb-24 mx-auto stretch overflow-y-scroll">
+      <img v-if="onlyUserAndAssistant.length <= 0" id="Logo"
+        class="absolute top-1/2 left-1/2 -z-1 w-100 -translate-x-1/2 -translate-y-1/2 opacity-20" src="/raiselogo.svg">
       <div v-for="m in onlyUserAndAssistant" key="m.id"
         class="[&>ul]:leading-6 [&>ul]:list-disc [&>ol]:leading-6 [&>ol]:list-decimal[&>h3]:text-xl [&>h3]:font-bold  [&>*]:mb-2 "
         :style="{ color: roleToColorMap[m.role] }" v-html="parseMarkdown(m.role, m.content)">
       </div>
       <!-- Input -->
-      <form @submit="handleSubmit">
-        <input class="fixed bottom-0 w-full max-w-md p-2 mb-8 border border-gray-300 rounded" v-model="input"
-          placeholder="Say something..." />
+      <form @submit="handleSubmit" class="fixed bottom-0 left-2/3 -translate-x-1/2 w-full max-w-md">
+        <input class="w-full  mb-8 border border-gray-300 rounded py-1" v-model="input" placeholder="Say something..." />
       </form>
     </div>
   </main>
