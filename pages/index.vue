@@ -95,7 +95,7 @@ onMounted(() => {
       <img v-if="onlyUserAndAssistant.length <= 0" id="Logo"
         class="absolute top-1/2 left-1/2 -z-1 w-100 -translate-x-1/2 -translate-y-1/2 opacity-20" src="/raiselogo.svg">
       <div v-for="m in onlyUserAndAssistant" key="m.id"
-        class="[&>ul]:leading-6 [&>ul]:list-disc [&>ol]:leading-6 [&>ol]:list-decimal[&>h3]:text-xl [&>h3]:font-bold  [&>*]:mb-2 "
+        class="[&>ul]:leading-6 [&>ul]:list-disc [&>ul]:list-inside [&>ol]:leading-6 [&>ol]:list-decimal [&>ol]:list-inside [&>h3]:text-xl [&>h3]:font-bold  [&>*]:mb-2 "
         v-html="parseMarkdown(m.role, m.content)">
       </div>
       <!-- Input -->
