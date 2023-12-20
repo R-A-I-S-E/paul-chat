@@ -65,20 +65,6 @@ const { messages, input, handleSubmit, append } = useChat({
       content: 'Structure your answers in markdown',
     }]
 });
-const handleClick = (e: Event) => {
-  e.preventDefault()
-  const target = e.target as HTMLButtonElement
-  console.log(target.innerText)
-  append({ content: target.innerText, role: 'user' })
-}
-// Generate a map of message role to text color
-const roleToColorMap: Record<Message['role'], string> = {
-  system: 'red',
-  user: 'black',
-  function: 'blue',
-  assistant: 'green',
-  data: 'orange',
-};
 
 const onlyUserAndAssistant = computed(() => {
   let filtered = messages.value.filter(m => m.role === 'user' || m.role === 'assistant')
@@ -86,8 +72,9 @@ const onlyUserAndAssistant = computed(() => {
   return filtered
 })
 const parseMarkdown = (role: string, content: string) => {
-  const roleString = role === 'user' ? 'YOU' : 'RAISE'
-  const combined = `**${roleString}**: ${content}`
+  const roleString = role === 'user' ? '<strong style="color: blue">YOU:</strong>' : '<strong style="color: lightgrey">RAISE:</strong>'
+
+  const combined = `${roleString} ${content}`
   const markdown = marked.parse(combined) as string
   return DOMPurify.sanitize(markdown)
 }
@@ -110,11 +97,12 @@ onMounted(() => {
         class="absolute top-1/2 left-1/2 -z-1 w-100 -translate-x-1/2 -translate-y-1/2 opacity-20" src="/raiselogo.svg">
       <div v-for="m in onlyUserAndAssistant" key="m.id"
         class="[&>ul]:leading-6 [&>ul]:list-disc [&>ol]:leading-6 [&>ol]:list-decimal[&>h3]:text-xl [&>h3]:font-bold  [&>*]:mb-2 "
-        :style="{ color: roleToColorMap[m.role] }" v-html="parseMarkdown(m.role, m.content)">
+        v-html="parseMarkdown(m.role, m.content)">
       </div>
       <!-- Input -->
       <form @submit="handleSubmit" class="fixed bottom-0 left-2/3 -translate-x-1/2 w-full max-w-md">
-        <input class="w-full  mb-8 border border-gray-300 rounded py-1" v-model="input" placeholder="Say something..." />
+        <input class="w-full  mb-8 border border-gray-300 rounded py-1 px-0.5 bg-gray-100 dark:bg-gray-900 "
+          v-model="input" placeholder="Say something..." />
       </form>
     </div>
   </main>
