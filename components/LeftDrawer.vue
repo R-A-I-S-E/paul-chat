@@ -4,11 +4,7 @@ const props = defineProps({
     promptTemplates: Array as PropType<[string, string][]>,
 })
 const emits = defineEmits(['clicked'])
-const handleClick = (e: MouseEvent) => {
-    e.preventDefault()
-    const target = e.target as HTMLButtonElement
-    emits('clicked', target.innerText as string)
-}
+
 //data ------------------------------------------------------------------------------------
 const promptTemplates = ref([
     ["List some tools for sound generation", "to create drum patterns and percussion"], ["Are there any cheap plugins", "for pitch correction and vocal processing"],
@@ -21,7 +17,7 @@ const promptTemplates = ref([
         <div class=" mt-20 flex flex-col content-stretch justify-start" id="prompt-templates" v-if="showTemplates">
             <button v-for="template in promptTemplates"
                 class="pre-wrap text-start mx-20  my-5 border-2 border-gray-300 dark:border-gray-700  px-12 rounded-3xl py-8"
-                @click="handleClick">
+                @click="emits('clicked', template.join(' '))">
                 <strong class="w-full">{{
                     template[0] }}</strong>
                 <br>
