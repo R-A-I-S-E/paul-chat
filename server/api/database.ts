@@ -2,8 +2,8 @@ import { ChromaClient } from 'chromadb';
 import { OpenAIEmbeddingFunction } from 'chromadb';
 
 export default defineLazyEventHandler(async () => {
-  const client = new ChromaClient({ path: 'http://localhost:8000' });
-  const openaiApiKey = process.env.OPENAI_API_KEY;
+  const client = new ChromaClient({ path: useRuntimeConfig().chromadbUrl });
+  const openaiApiKey = useRuntimeConfig().openaiApiKey;
   if (!openaiApiKey) {
     throw new Error('OPENAI_API_KEY is not set');
   }
@@ -12,7 +12,7 @@ export default defineLazyEventHandler(async () => {
   });
   const collection = await client
     .getCollection({
-      name: 'PluginList',
+      name: useRuntimeConfig().chromadbCollectionName,
       embeddingFunction: embedder
     })
     .catch((err: Error) => {

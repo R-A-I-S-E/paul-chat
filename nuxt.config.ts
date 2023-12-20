@@ -6,6 +6,8 @@ export default defineNuxtConfig({
     preset: 'vercel-edge' // you can use 'vercel' or other providers here
   },
   runtimeConfig: {
-    openaiApiKey: process.env.OPENAI_API_KEY
+    openaiApiKey: process.env.OPENAI_API_KEY,
+    chromadbUrl: process.env.CHROMADB_URL,
+    chromadbCollectionName: process.env.CHROMADB_COLLECTION
   }
 });
