@@ -87,7 +87,7 @@ onMounted(() => {
 </script>
 
 <template >
-  <main class=" bg-gray-100 dark:bg-gray-900 h-screen  h-dvh w-full flex flex-row">
+  <main class=" bg-gray-100 dark:bg-gray-950 h-screen  h-dvh w-full flex flex-row">
     <Header />
     <LeftDrawer @clicked="append({ content: $event, role: 'user' })" :show-templates="onlyUserAndAssistant.length <= 0" />
     <!-- Chat History: -->
@@ -95,12 +95,12 @@ onMounted(() => {
       <img v-if="onlyUserAndAssistant.length <= 0" id="Logo"
         class="absolute top-1/2 left-1/2 -z-1 w-100 -translate-x-1/2 -translate-y-1/2 opacity-20" src="/raiselogo.svg">
       <div v-for="m in onlyUserAndAssistant" key="m.id"
-        class="[&>ul]:leading-6 [&>ul]:list-disc [&>ul]:list-inside [&>ol]:leading-6 [&>ol]:list-decimal [&>ol]:list-inside [&>h3]:text-xl [&>h3]:font-bold  [&>*]:mb-2 "
+        class="[&>ul]:leading-6 [&>ul]:list-disc [&>ul]:list-inside [&>ol]:leading-6 [&>ol]:list-decimal [&>ol]:list-inside [&>h3]:text-xl [&>h3]:font-bold  [&>*]:mb-2  [&:*]:text-gray-950 dark:text-gray-100"
         v-html="parseMarkdown(m.role, m.content)">
       </div>
       <!-- Input -->
       <form @submit="handleSubmit" class="fixed bottom-0 left-2/3 -translate-x-1/2 w-full max-w-md">
-        <input class="w-full  mb-8 border border-gray-300 rounded py-1 px-0.5 bg-gray-100 dark:bg-gray-900 "
+        <input class="w-full  mb-8 border border-gray-300 rounded py-1 px-0.5 bg-gray-100 dark:bg-gray-950 "
           v-model="input" placeholder="Say something..." />
       </form>
     </div>
