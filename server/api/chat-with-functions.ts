@@ -10,14 +10,15 @@ const functions: ChatCompletionCreateParams.Function[] = [
   {
     name: 'querryDataBase',
     description:
-      'querrys the vector database of music production plugins that work with ai. to find the nearest neighbors to the query text',
+      'querrys the vector database of music production plugins that work with ai. to find the nearest neighbors to the query text.' +
+      'Every plugin text contains: name, category, releaseDate, company, developers, what can you do with it?,category tag, how does it work?, technology, technicalRequirements,required knowledge,skill level,recommended knowledge,cost structure',
     parameters: {
       type: 'object',
       properties: {
         queryTexts: {
           type: 'string',
           description:
-            'The text to search for in the database. It retrieves the nearest neighbors to this text. The results could be not specifially what the user wants'
+            'The text to search for in the database. It retrieves the nearest neighbors to this text.'
         },
         nResults: {
           type: 'number',
