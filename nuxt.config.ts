@@ -12,7 +12,7 @@ export default defineNuxtConfig({
   },
   googleFonts: {
     families: {
-      'IBM Plex Sans': [400, 700],
+      'IBM Plex Sans': [400, 500, 600, 700],
       'Archivo Black': [400]
     }
   }
