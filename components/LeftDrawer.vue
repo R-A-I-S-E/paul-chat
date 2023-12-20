@@ -17,6 +17,7 @@ const promptTemplates = ref([
 </script>
 <template>
     <div class="w-1/3 border-r-2 border-gray-300  dark:border-gray-700 flex flex-col pt-20">
+        <h2 class="uppercase text-gray-900 dark:gray-100 font-display text-5xl ml-6 mt-6">Database for AI sound tools</h2>
         <div class=" mt-20 flex flex-col content-stretch justify-start" id="prompt-templates" v-if="showTemplates">
             <button v-for="template in promptTemplates"
                 class="pre-wrap text-start mx-20  my-5 border-2 border-gray-300 dark:border-gray-700  px-12 rounded-3xl py-8"
