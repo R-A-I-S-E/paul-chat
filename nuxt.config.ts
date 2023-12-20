@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ['@nuxtjs/tailwindcss'],
+  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/google-fonts'],
   nitro: {
     preset: 'vercel-edge' // you can use 'vercel' or other providers here
   },
@@ -9,5 +9,11 @@ export default defineNuxtConfig({
     openaiApiKey: process.env.OPENAI_API_KEY,
     chromadbUrl: process.env.CHROMADB_URL,
     chromadbCollectionName: process.env.CHROMADB_COLLECTION
+  },
+  googleFonts: {
+    families: {
+      'IBM Plex Sans': [400, 700],
+      'Archivo Black': [400]
+    }
   }
 });
