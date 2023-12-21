@@ -60,9 +60,15 @@ vercel deploy
 
 ## Datastructure
 
-the app is organised with the homepage in `./pages/index.vue`
-the api calls are made on the server in `./server/api/database.ts` and `./server/api/chat-with-functions.ts`
-ChatHistory, Header, the left Drawer and Logo have their own components in `./components/`
+- the app is organised with the homepage in `./pages/index.vue`
+- Other routes are `./pages/help/index.vue`, `./pages/research/index.vue` and `./pages/about/index.vue`.
+- ChatHistory, Header, the left Drawer and Logo have their own components in `./components/`
+- there is a `./layouts/default.vue` that contains the `Header.vue`
+- the api calls are made on the server in `./server/api/database.ts` and `./server/api/chat-with-functions.ts`
+
+### Routing
+
+To enable the links in the `Header.vue` you need to uncomment the nuxt-links andd remove the buttons.
 
 ## TODO:
 
