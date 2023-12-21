@@ -92,10 +92,9 @@ onMounted(() => {
     <LeftDrawer @clicked="append({ content: $event, role: 'user' })" :show-templates="onlyUserAndAssistant.length <= 0" />
     <!-- Chat History: -->
     <div class="relative flex flex-col w-2/3 px-40 pt-60 pb-24 mx-auto stretch overflow-y-scroll">
-      <img v-if="onlyUserAndAssistant.length <= 0" id="Logo"
-        class="absolute top-1/2 left-1/2 -z-1 w-100 -translate-x-1/2 -translate-y-1/2 opacity-20" src="/raiselogo.svg">
+      <Logo v-if="onlyUserAndAssistant.length <= 0" />
       <div v-for="m in onlyUserAndAssistant" key="m.id"
-        class="[&>ul]:leading-6 [&>ul]:list-disc [&>ul]:list-inside [&>ol]:leading-6 [&>ol]:list-decimal [&>ol]:list-inside [&>h3]:text-xl [&>h3]:font-bold  [&>*]:mb-2  [&:*]:text-gray-950 dark:text-gray-100"
+        class="[&>ul>*]:ml-4 [&>ul]:leading-6 [&>ul]:list-disc [&>ul]:list-inside [&>ol>*]:ml-4  [&>ol]:leading-6 [&>ol]:list-decimal [&>ol]:list-inside [&>h3]:text-xl [&>h3]:font-bold  [&>*]:mb-2  [&:*]:text-gray-950 dark:text-gray-100"
         v-html="parseMarkdown(m.role, m.content)">
       </div>
       <!-- Input -->
