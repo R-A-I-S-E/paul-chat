@@ -1,12 +1,14 @@
 <script setup lang="ts">
+// imports ------------------------------------------------------------------------------------
 import type { Message } from 'ai';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify'
+//props and emits ------------------------------------------------------------------------------------
 const props = defineProps<{
     messages: Message[];
 
 }>();
-
+//methods ------------------------------------------------------------------------------------
 const onlyUserAndAssistant = computed(() => {
     let filtered = props.messages.filter(m => m.role === 'user' || m.role === 'assistant')
     filtered = filtered.filter(m => !m.function_call)

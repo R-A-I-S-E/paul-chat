@@ -1,4 +1,5 @@
 <script setup lang="ts">
+//props and emits ------------------------------------------------------------------------------------
 const props = defineProps({
     showTemplates: Boolean,
     promptTemplates: Array as PropType<[string, string][]>,
