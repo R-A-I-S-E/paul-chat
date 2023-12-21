@@ -75,7 +75,8 @@ const { messages, input, handleSubmit, append } = useChat({
     <ChatHistory :messages="messages">
       <!-- Input -->
       <form @submit="handleSubmit" class="fixed bottom-0 left-2/3 -translate-x-1/2 w-full max-w-md">
-        <input class="w-full  mb-8 border border-gray-300 rounded py-1 px-0.5 bg-gray-100 dark:bg-gray-950 "
+        <input
+          class="w-full  mb-8 border border-gray-300 rounded py-1 px-0.5 bg-gray-100 dark:bg-gray-950 text-gray-950 dark:text-gray-100 "
           v-model="input" placeholder="Say something..." />
       </form>
     </ChatHistory>
