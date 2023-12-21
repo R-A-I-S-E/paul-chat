@@ -49,21 +49,14 @@ export default defineLazyEventHandler(async () => {
 
     const data = new experimental_StreamData();
     const stream = OpenAIStream(response, {
-      experimental_onFunctionCall: async (
-        { name, arguments: args },
-        createFunctionCallMessages
-      ) => {},
+      experimental_onFunctionCall: async () => {},
       onCompletion(completion) {
         console.log('completion', completion);
       },
-      onFinal(completion) {
+      onFinal() {
         data.close();
       },
       experimental_streamData: true
-    });
-
-    data.append({
-      text: 'Hello, how are you?'
     });
 
     return new StreamingTextResponse(stream, {}, data);
