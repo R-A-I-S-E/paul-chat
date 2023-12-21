@@ -31,7 +31,7 @@ function parseMarkdown(role: string, content: string) {
 </script>
 
 <template>
-    <div class="relative flex flex-col w-2/3 px-40 pt-60 pb-24 mx-auto stretch overflow-y-scroll">
+    <div class="relative flex flex-col w-[65%] px-40 pt-60 pb-24 mx-auto stretch overflow-y-scroll">
         <Logo v-if="onlyUserAndAssistant.length <= 0" />
         <div v-for="m in onlyUserAndAssistant" :key="m.id"
             class="[&>a]:underline [&>ul>*]:ml-4 [&>ul]:leading-6 [&>ul]:list-disc [&>ul]:list-outside [&>ol>*]:ml-4  [&>ol]:leading-6 [&>ol]:list-decimal [&>ol]:list-outside [&>h3]:text-xl [&>h3]:font-bold  [&>*]:mb-2  [&:*]:text-gray-950 dark:text-gray-100"
