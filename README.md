@@ -7,18 +7,20 @@ It is build with the [Vercel AI SDK](https://github.com/vercel/ai) and [Nuxt](ht
 
 It uses the feature [function-calling](https://platform.openai.com/docs/guides/function-calling) to enable the model to query the Database with the `querryDataBase()`function. The model can give it own inputs to the function. The function is described in a json schema:
 
-```JS
-{
+```TypeScript
+const functions: ChatCompletionCreateParams.Function[] = [
+  {
     name: 'querryDataBase',
     description:
-      'querrys the vector database of music production plugins that work with ai. to find the nearest neighbors to the query text',
+      'querrys the vector database of music production plugins that work with ai. to find the nearest neighbors to the query text.' +
+      'Every plugin text contains: name, category, releaseDate, company, developers, what can you do with it?, category tag, how does it work?, technology, technicalRequirements, required knowledge,skill level, recommended knowledge, cost structure',
     parameters: {
       type: 'object',
       properties: {
         queryTexts: {
           type: 'string',
           description:
-            'The text to search for in the database. It retrieves the nearest neighbors to this text. The results could be not specifially what the user wants'
+            'The text to search for in the database. It retrieves the nearest neighbors to this text.'
         },
         nResults: {
           type: 'number',
@@ -28,6 +30,7 @@ It uses the feature [function-calling](https://platform.openai.com/docs/guides/f
       required: ['queryTexts']
     }
   }
+];
 ```
 
 ## Chroma DB
@@ -59,6 +62,7 @@ vercel deploy
 
 the app is organised with the homepage in `./pages/index.vue`
 the api calls are made on the server in `./server/api/database.ts` and `./server/api/chat-with-functions.ts`
+ChatHistory, Header, the left Drawer and Logo have their own components in `./components/`
 
 ## TODO:
 
