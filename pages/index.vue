@@ -2,8 +2,7 @@
 // imports ------------------------------------------------------------------------------------
 import { useChat } from 'ai/vue';
 import { nanoid } from 'ai';
-import { marked } from 'marked';
-import DOMPurify from 'dompurify'
+
 import type { FunctionCallHandler, Message } from 'ai';
 import type { DatabaseResponse, Input } from '../types';
 //data------------------------------------------------------------------------------------
@@ -17,8 +16,6 @@ const querryDataBase = async (_input: Input) => {
     }, body: JSON.stringify({ queryTexts: _input.queryTexts, nResults: _input.nResults })
 
   }) as { data: { value: DatabaseResponse } }
-
-
   return response?.data?.value?.["response"]["documents"]
 };
 
@@ -66,42 +63,21 @@ const { messages, input, handleSubmit, append } = useChat({
     }]
 });
 
-const onlyUserAndAssistant = computed(() => {
-  let filtered = messages.value.filter(m => m.role === 'user' || m.role === 'assistant')
-  filtered = filtered.filter(m => !m.function_call)
-  return filtered
-})
-const parseMarkdown = (role: string, content: string) => {
-  const roleString = role === 'user' ? '<strong style="color: blue">YOU:</strong>' : '<strong style="color: lightgrey">RAISE:</strong>'
-
-  const combined = `${roleString} ${content}`
-  const markdown = marked.parse(combined) as string
-  return DOMPurify.sanitize(markdown)
-}
-
 //lifecycle ------------------------------------------------------------------------------------
-onMounted(() => {
-
-})
 
 </script>
 
 <template >
   <main class=" bg-gray-100 dark:bg-gray-950 h-screen  h-dvh w-full flex flex-row">
     <Header />
-    <LeftDrawer @clicked="append({ content: $event, role: 'user' })" :show-templates="onlyUserAndAssistant.length <= 0" />
+    <LeftDrawer @clicked="append({ content: $event, role: 'user' })" :show-templates="true" />
     <!-- Chat History: -->
-    <div class="relative flex flex-col w-2/3 px-40 pt-60 pb-24 mx-auto stretch overflow-y-scroll">
-      <Logo v-if="onlyUserAndAssistant.length <= 0" />
-      <div v-for="m in onlyUserAndAssistant" key="m.id"
-        class="[&>ul>*]:ml-4 [&>ul]:leading-6 [&>ul]:list-disc [&>ul]:list-inside [&>ol>*]:ml-4  [&>ol]:leading-6 [&>ol]:list-decimal [&>ol]:list-inside [&>h3]:text-xl [&>h3]:font-bold  [&>*]:mb-2  [&:*]:text-gray-950 dark:text-gray-100"
-        v-html="parseMarkdown(m.role, m.content)">
-      </div>
+    <ChatHistory :messages="messages">
       <!-- Input -->
       <form @submit="handleSubmit" class="fixed bottom-0 left-2/3 -translate-x-1/2 w-full max-w-md">
         <input class="w-full  mb-8 border border-gray-300 rounded py-1 px-0.5 bg-gray-100 dark:bg-gray-950 "
           v-model="input" placeholder="Say something..." />
       </form>
-    </div>
+    </ChatHistory>
   </main>
 </template> 
