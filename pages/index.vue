@@ -72,10 +72,10 @@ const { messages, input, handleSubmit, append } = useChat({
   <!-- Chat History: -->
   <ChatHistory :messages="messages">
     <!-- Input -->
-    <form @submit="handleSubmit" class="fixed bottom-0 left-2/3 -translate-x-1/2 w-full max-w-md">
+    <form @submit="handleSubmit" class="fixed flex flex-row justify-center bottom-0 right-0  w-full max-w-[65%]">
       <input
-        class="w-full  mb-8 border border-gray-300 rounded py-1 px-0.5 bg-gray-100 dark:bg-gray-950 text-gray-950 dark:text-gray-100 "
-        v-model="input" placeholder="Say something..." />
+        class=" relative w-full mx-20 mb-8 border-2 border-gray-300  dark:border-gray-700 rounded-full py-4 px-4 bg-gray-100 dark:bg-gray-950 text-gray-950 dark:text-gray-100 "
+        v-model="input" placeholder="Ask me anything about AI sound tools..." />
     </form>
   </ChatHistory>
 </template> 
