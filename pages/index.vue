@@ -1,23 +1,27 @@
 <script setup lang="ts">
 // imports ------------------------------------------------------------------------------------
-import { useChat } from 'ai/vue';
-import { nanoid } from 'ai';
+import { useChat } from 'ai/vue'
+import { nanoid } from 'ai'
 
-import type { FunctionCallHandler, Message } from 'ai';
-import type { DatabaseResponse, Input } from '../types';
-//data------------------------------------------------------------------------------------
+import type { FunctionCallHandler, Message } from 'ai'
+import type { DatabaseResponse, Input } from '../types'
 
-//methods ------------------------------------------------------------------------------------
-const querryDataBase = async (_input: Input) => {
-  if (!_input.queryTexts) throw new Error('no input provided')
+// data------------------------------------------------------------------------------------
+
+// methods ------------------------------------------------------------------------------------
+async function querryDataBase(_input: Input) {
+  if (!_input.queryTexts)
+    throw new Error('no input provided')
   const response = await useFetch('/api/database', {
-    method: 'POST', headers: {
+    method: 'POST',
+    headers: {
       'Content-Type': 'application/json',
-    }, body: JSON.stringify({ queryTexts: _input.queryTexts, nResults: _input.nResults })
+    },
+    body: JSON.stringify({ queryTexts: _input.queryTexts, nResults: _input.nResults }),
 
   }) as { data: { value: DatabaseResponse } }
-  return response?.data?.value?.["response"]["documents"]
-};
+  return response?.data?.value?.response.documents
+}
 
 const functionCallHandler: FunctionCallHandler = async (
   chatMessages,
@@ -37,11 +41,11 @@ const functionCallHandler: FunctionCallHandler = async (
             content: res.join('\n'),
           },
         ],
-      };
-      return functionResponse;
+      }
+      return functionResponse
     }
   }
-};
+}
 
 const { messages, input, handleSubmit, append } = useChat({
   api: '/api/chat-with-functions',
@@ -51,7 +55,8 @@ const { messages, input, handleSubmit, append } = useChat({
       id: nanoid(),
       role: 'system',
       content: 'Only aswer questions that relate to the database context! Dont lie and only use information from the database',
-    }, {
+    },
+    {
       id: nanoid(),
       role: 'system',
       content: 'talk like a all knowing music database, dont say to the user you are searching one. Query more that you need and then filter the results',
@@ -60,22 +65,23 @@ const { messages, input, handleSubmit, append } = useChat({
       id: nanoid(),
       role: 'system',
       content: 'Structure your answers in markdown',
-    }]
-});
+    },
+  ],
+})
 
-//lifecycle ------------------------------------------------------------------------------------
-
+// lifecycle ------------------------------------------------------------------------------------
 </script>
 
-<template >
-  <LeftDrawer @clicked="append({ content: $event, role: 'user' })" :show-templates="true" />
+<template>
+  <LeftDrawer :show-templates="true" @clicked="append({ content: $event, role: 'user' })" />
   <!-- Chat History: -->
   <ChatHistory :messages="messages">
     <!-- Input -->
-    <form @submit="handleSubmit" class="fixed flex flex-row justify-center bottom-0 right-0  w-full max-w-[65%]">
+    <form class="fixed flex flex-row justify-center bottom-0 right-0  w-full max-w-[65%]" @submit="handleSubmit">
       <input
-        class=" relative w-full mx-20 mb-8 border-2 border-gray-300  dark:border-gray-700 rounded-full py-4 px-4 bg-gray-100 dark:bg-gray-950 text-gray-950 dark:text-gray-100 "
-        v-model="input" placeholder="Ask me anything about AI sound tools..." />
+        v-model="input"
+        class=" relative w-full mx-20 mb-8 border-2 border-gray-300  dark:border-gray-700 rounded-full py-4 px-4 bg-gray-100 dark:bg-gray-950 text-gray-950 dark:text-gray-100 " placeholder="Ask me anything about AI sound tools..."
+      >
     </form>
   </ChatHistory>
-</template> 
+</template>
