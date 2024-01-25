@@ -45,7 +45,13 @@ The Chroma SDK is used in the [api/database.ts](./api/database.ts) file to query
 
 ## To Run
 
-You need to add your OpenAI API key, a link to your chromadb and the collection name to your .env file. then run:
+**You need to add your OpenAI API key, a link to your chromadb and the collection name to your .env file.**
+```.env
+NUXT_OPENAI_API_KEY=xxxxxxx
+CHROMADB_URL=xxxxxxx
+CHROMADB_COLLECTION=xxxxxxx
+```
+then run:
 
 ```bash
 pnpm install
