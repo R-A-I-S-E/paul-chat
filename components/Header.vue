@@ -17,6 +17,10 @@ const navigation = ref([{ label: 'help', route: 'help' }, { label: 'research', r
         {{ element.label }}
       </button>
       <a href="https://www.hfg-offenbach.de/de/pages/raise-ki-forschung-sound-und-musik#ueber" target="_blank" class="uppercase text-gray-300 dark:text-gray-700 border-2 border-gray-300 dark:border-gray-700 py-2 px-4 rounded-3xl text-xl font-medium">about</a>
+
+      <NuxtLink v-if="$auth.loggedIn" to="/api/logout" external class="uppercase text-gray-300 dark:text-gray-700 border-2 border-gray-300 dark:border-gray-700 py-2 px-4 rounded-3xl text-xl font-medium">
+        Sign out
+      </NuxtLink>
     </nav>
   </header>
 </template>
