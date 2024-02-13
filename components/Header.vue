@@ -1,5 +1,11 @@
 <script setup lang="ts">
-const navigation = ref([{ label: 'help', route: 'help' }, { label: 'research', route: 'research' }])
+const route = useRoute()
+const navigation = computed(() => {
+  if (route.fullPath === '/bug-report')
+    return [{ label: 'research', route: 'research' }, { label: 'chat', route: '' }]
+  else
+    return [{ label: 'research', route: 'research' }, { label: 'bug report', route: 'bug-report' }]
+})
 </script>
 
 <template>
@@ -10,12 +16,12 @@ const navigation = ref([{ label: 'help', route: 'help' }, { label: 'research', r
       <!-- <nuxt-link v-for="element in navigation" :key="element.label" :to="`/${element.route}`"
                 class="uppercase text-gray-300 dark:text-gray-700 border-2 border-gray-300 dark:border-gray-700 py-2 px-4 rounded-3xl text-xl font-medium">
                 {{ element.label }}</nuxt-link> -->
-      <button
+      <NuxtLink
         v-for="element in navigation" :key="element.label" :to="`/${element.route}`"
         class="uppercase text-gray-300 dark:text-gray-700 border-2 border-gray-300 dark:border-gray-700 py-2 px-4 rounded-3xl text-xl font-medium"
       >
         {{ element.label }}
-      </button>
+      </NuxtLink>
       <a href="https://www.hfg-offenbach.de/de/pages/raise-ki-forschung-sound-und-musik#ueber" target="_blank" class="uppercase text-gray-300 dark:text-gray-700 border-2 border-gray-300 dark:border-gray-700 py-2 px-4 rounded-3xl text-xl font-medium">about</a>
 
       <NuxtLink v-if="$auth.loggedIn" to="/api/logout" external class="uppercase text-gray-300 dark:text-gray-700 border-2 border-gray-300 dark:border-gray-700 py-2 px-4 rounded-3xl text-xl font-medium">
