@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     openaiApiKey: process.env.OPENAI_API_KEY,
     chromadbUrl: process.env.CHROMADB_URL,
     chromadbCollectionName: process.env.CHROMADB_COLLECTION,
+    discordWebhookUrl: process.env.DISCORD_WEBHOOK_URL,
   },
   googleFonts: {
     families: {
