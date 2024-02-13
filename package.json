@@ -17,7 +17,9 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.2.0",
     "chromadb": "^1.7.2",
+    "cohere-ai": "^7.7.5",
     "dompurify": "^3.0.6",
     "marked": "^11.1.0"
   },
