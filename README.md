@@ -1,7 +1,12 @@
 # RAISE DATABASE CHATBOT
 
-this Chatbot uses [OpenAIs ChatGPT API](https://github.com/openai/openai-node/blob/master/api.md) to query a [Chroma Vector Database](https://docs.trychroma.com/).
-It is build with the [Vercel AI SDK](https://github.com/vercel/ai) and [Nuxt](https://nuxt.com/) and [Tailwind](https://tailwindcss.com/) for styling.
+This Chatbot uses:
+
+- [OpenAIs ChatGPT API](https://github.com/openai/openai-node/blob/master/api.md)
+- querying a [Chroma Vector Database](https://docs.trychroma.com/).
+- It is build with the [Vercel AI SDK](https://github.com/vercel/ai)
+- [Nuxt](https://nuxt.com/)
+- [Tailwind](https://tailwindcss.com/) for styling.
 
 ## how it works
 
@@ -40,7 +45,13 @@ The Chroma SDK is used in the [api/database.ts](./api/database.ts) file to query
 
 ## To Run
 
-You need to add your OpenAI API key, a link to your chromadb and the collection name to your .env file. then run:
+**You need to add your OpenAI API key, a link to your chromadb and the collection name to your .env file.**
+```.env
+NUXT_OPENAI_API_KEY=xxxxxxx
+CHROMADB_URL=xxxxxxx
+CHROMADB_COLLECTION=xxxxxxx
+```
+then run:
 
 ```bash
 pnpm install

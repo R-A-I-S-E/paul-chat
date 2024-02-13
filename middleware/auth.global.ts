@@ -1,4 +1,4 @@
-export default defineNuxtRouteMiddleware(async (to) => {
+export default defineNuxtRouteMiddleware(async (to, from) => {
   const client = useKindeClient()
   const p = await useAsyncData(async () => {
     const { permissions } = (await client.getPermissions()) ?? {}
@@ -6,7 +6,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
   })
   const permission = p?.data?.value?.includes('useChat') || false
 
-  if (!permission && to.path !== '/login')
+  if (!permission && to.path !== '/login' && from.path !== '/login')
     return navigateTo('/login')
   else if (permission && to.path === '/login')
     return navigateTo('/')
