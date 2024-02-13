@@ -5,9 +5,12 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     return permissions
   })
   const permission = p?.data?.value?.includes('useChat') || false
-
-  if (!permission && to.path !== '/login' && from.path !== '/login')
+  /*  if (!permission && to.path !== '/login' && from.path !== '/login')
     return navigateTo('/login')
   else if (permission && to.path === '/login')
     return navigateTo('/')
+  else if (permission && to.path === '/login' && from.path === '/login')
+    return navigateTo('/')
+  else */
+  // return navigateTo(to.path)
 })

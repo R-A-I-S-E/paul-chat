@@ -4,7 +4,23 @@ import { useChat } from 'ai/vue'
 import { nanoid } from 'ai'
 
 import type { FunctionCallHandler, Message } from 'ai'
-import type { DatabaseResponse, Input } from '../types'
+
+export interface Input {
+  queryTexts: string
+  nResults: number
+}
+export interface Metadatas { name: string } // metadatas can be added in the ingest process if you want to have here more information
+export interface DatabaseResponse {
+  response: {
+    ids: string[]
+    distances: number[][]
+    documents: string[]
+    metadatas: Metadatas[] | null
+    embeddings: number[][] | null
+    data: any | null
+    uris: any | null
+  }
+}
 
 // data------------------------------------------------------------------------------------
 
