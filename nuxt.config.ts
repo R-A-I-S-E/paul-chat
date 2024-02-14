@@ -6,10 +6,10 @@ export default defineNuxtConfig({
     preset: 'vercel-edge', // you can use 'vercel' or other providers here
   },
   runtimeConfig: {
-    openaiApiKey: process.env.OPENAI_API_KEY,
-    chromadbUrl: process.env.CHROMADB_URL,
-    chromadbCollectionName: process.env.CHROMADB_COLLECTION,
-    discordWebhookUrl: process.env.DISCORD_WEBHOOK_URL,
+    openaiApiKey: process.env.NUXT_OPENAI_API_KEY,
+    chromadbUrl: process.env.NUXT_CHROMADB_URL,
+    chromadbCollectionName: process.env.NUXT_CHROMADB_COLLECTION,
+    discordWebhookUrl: process.env.NUXT_DISCORD_WEBHOOK_URL,
   },
   googleFonts: {
     families: {
@@ -19,10 +19,10 @@ export default defineNuxtConfig({
   },
   kinde: {
     authDomain: process.env.NUXT_KINDE_AUTH_DOMAIN,
-    clientID: process.env.NUXT_KINDE_CLIENT_ID,
+    clientId: process.env.NUXT_KINDE_CLIENT_ID,
     clientSecret: process.env.NUXT_KINDE_CLIENT_SECRET,
-    redirectURL: process.env.NUXT_KINDE_REDIRECT_URL,
-    logoutRedirectURL: process.env.NUXT_KINDE_LOGOUT_REDIRECT_URL,
-    postLoginRedirectURL: process.env.NUXT_KINDE_POST_LOGIN_REDIRECT_URL,
+    redirectURL: process.env.VERCEL_URL ? `https://${process.env.NUXT_VERCEL_URL}/api/callback` : `http://localhost:3000/api/callback`,
+    logoutRedirectURL: process.env.VERCEL_URL ? `https://${process.env.NUXT_VERCEL_URL}` : `http://localhost:3000`,
+    postLoginRedirectURL: process.env.VERCEL_URL ? `https://${process.env.NUXT_VERCEL_URL}` : `http://localhost:3000`,
   },
 })
