@@ -26,8 +26,7 @@ export default defineLazyEventHandler(async () => {
   }
   return defineEventHandler(async (event) => {
     const message = await readBody(event)
-    const cleanedMessage = message
-    const request = await sendtoDiscord(cleanedMessage)
+    const request = await sendtoDiscord(message.content)
     return request
   })
 })
