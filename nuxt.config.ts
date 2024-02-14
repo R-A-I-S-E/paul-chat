@@ -21,8 +21,8 @@ export default defineNuxtConfig({
     authDomain: process.env.NUXT_KINDE_AUTH_DOMAIN,
     clientId: process.env.NUXT_KINDE_CLIENT_ID,
     clientSecret: process.env.NUXT_KINDE_CLIENT_SECRET,
-    redirectURL: process.env.VERCEL_URL ? `https://${process.env.NUXT_VERCEL_URL}/api/callback` : `http://localhost:3000/api/callback`,
-    logoutRedirectURL: process.env.VERCEL_URL ? `https://${process.env.NUXT_VERCEL_URL}` : `http://localhost:3000`,
-    postLoginRedirectURL: process.env.VERCEL_URL ? `https://${process.env.NUXT_VERCEL_URL}` : `http://localhost:3000`,
+    redirectURL: process.env.NUXT_ENV_VERCEL_URL ? `https://${process.env.NUXT_ENV_VERCEL_URL}/api/callback` : `http://localhost:3000/api/callback`,
+    logoutRedirectURL: process.env.NUXT_ENV_VERCEL_URL ? `https://${process.env.NUXT_ENV_VERCEL_URL}` : `http://localhost:3000`,
+    postLoginRedirectURL: process.env.NUXT_ENV_VERCEL_URL ? `https://${process.env.NUXT_ENV_VERCEL_URL}` : `http://localhost:3000`,
   },
 })
