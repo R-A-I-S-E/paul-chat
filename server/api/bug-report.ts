@@ -1,6 +1,4 @@
 // import * as sanitizeHtml from 'sanitize-html'
-import sanitizeHtml from 'sanitize-html'
-
 export default defineLazyEventHandler(async () => {
   let response = ''
   const webhook = useRuntimeConfig().discordWebhookUrl
@@ -28,7 +26,7 @@ export default defineLazyEventHandler(async () => {
   }
   return defineEventHandler(async (event) => {
     const message = await readBody(event)
-    const cleanedMessage = sanitizeHtml(message.content)
+    const cleanedMessage = message
     const request = await sendtoDiscord(cleanedMessage)
     return request
   })
