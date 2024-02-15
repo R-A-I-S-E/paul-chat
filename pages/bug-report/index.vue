@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import sanitizeHtml from 'sanitize-html'
+import DOMPurify from 'dompurify'
 
 const input = ref('')
 const data = ref()
 async function sendReport(event: Event) {
   event.preventDefault()
-  const cleaned = sanitizeHtml(input.value)
+  const cleaned = DOMPurify.sanitize(input.value)
   data.value = await useFetch('/api/bug-report', {
     method: 'POST',
     headers: {
