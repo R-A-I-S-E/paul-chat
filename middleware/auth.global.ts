@@ -6,7 +6,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
     return (await client?.getPermission('useChat')) ?? {}
   })
   if (!allowed)
-    allowed = access.value.isGranted || false
+    allowed = access?.value?.isGranted || false
 
   if (!allowed && to.fullPath !== '/login')
     return navigateTo('/login')
