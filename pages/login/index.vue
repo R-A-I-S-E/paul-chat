@@ -12,4 +12,10 @@
       Sign up
     </NuxtLink>
   </div>
+  <div v-else class="flex justify-center w-full h-full items-center flex-col uppercase text-xl">
+    <strong class="text-red-700">
+      You have no access to the Database
+    </strong>
+    <p> An admin can give you access</p>
+  </div>
 </template>
