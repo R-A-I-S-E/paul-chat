@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  nuxt_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5454:3000"
+    environment:
+      - NUXT_CHROMADB_URL=http://chroma_db:8000
+      - NUXT_CHROMADB_AUTH=${CHROMA_SERVER_AUTH_CREDENTIALS}
+    env_file:
+      - .env
+
+  chroma_db:
+    image: chromadb/chroma
+    ports:
+      - 8000:8000
+    volumes:
+      - chroma-data:/chroma/chroma
+    environment:
+      - ANONYMIZED_TELEMETRY=False
+      - IS_PERSISTENT=true
+    env_file:
+      - .env
+
+volumes:
+  chroma-data:
+    driver: local
