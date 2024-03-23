@@ -33,6 +33,8 @@ WORKDIR /usr/src/app
 COPY --from=install /temp/prod/node_modules /usr/src/app/node_modules
 COPY --from=prerelease /usr/src/app/.output /usr/src/app/.output
 COPY package.json /usr/src/app/
+# remove next line when openai fixes the issue
+COPY overwrite.txt /usr/src/app/.output/server/node_modules/openai/_shims/index.mjs
 
 # Ensure the container runs as a non-root user
 USER bun
