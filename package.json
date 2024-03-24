@@ -20,6 +20,7 @@
     "ai": "^3.0.13",
     "chromadb": "^1.8.1",
     "dompurify": "^3.0.6",
+    "googleapis": "^134.0.0",
     "marked": "^11.1.0",
     "openai": "^4.29.2"
   },
