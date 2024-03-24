@@ -15,8 +15,8 @@ services:
 
   chroma_db:
     image: chromadb/chroma
-    ports:
-      - 8000:8000
+    expose:
+      - "8000"
     volumes:
       - chroma-data:/chroma/chroma
     environment:
