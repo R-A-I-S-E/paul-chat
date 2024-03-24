@@ -30,7 +30,10 @@ async function getGoogleSheet() {
     range: 'Data',
   }
   const sheets = google.sheets({ version: 'v4', auth: useRuntimeConfig().googleAPIKey as string })
-  const response = await sheets.spreadsheets.values.get(params)
+  const response = await sheets.spreadsheets.values.get(params).catch((err: Error) => {
+    console.error('The API returned an error:', err)
+    throw err
+  })
   if (!response.data.values)
     return []
   return response.data.values
@@ -118,7 +121,7 @@ export default defineTask({
       throw new Error('Please provide your OpenAI API key in the .env file')
     if (!useRuntimeConfig().chromadbUrl)
       throw new Error('Please provide your Chroma URL in the .env file')
-    if (!useRuntimeConfig().chromadbCollectionName)
+    if (!useRuntimeConfig().chromadbCollection)
       throw new Error('Please provide your Chroma collection name in the .env file')
     if (!useRuntimeConfig().chromadbAuth)
       throw new Error('Please provide your Chroma Auth in the .env file')
@@ -135,8 +138,11 @@ export default defineTask({
     })
 
     const collection = await client.getOrCreateCollection({
-      name: useRuntimeConfig().chromadbCollectionName,
+      name: useRuntimeConfig().chromadbCollection,
       embeddingFunction: embedder,
+    }).catch((err: Error) => {
+      console.error('Failed to get collection:', err)
+      throw err
     })
 
     await collection.upsert({
@@ -144,6 +150,9 @@ export default defineTask({
         return `id${index}`
       }),
       documents: array,
+    }).catch((err: Error) => {
+      console.error('Failed to upsert documents:', err)
+      throw err
     })
     const count = await collection.count()
     // eslint-disable-next-line no-console

@@ -13,13 +13,13 @@ export default defineNuxtConfig({
 
   },
   runtimeConfig: {
-    openaiApiKey: process.env.NUXT_OPENAI_API_KEY,
-    chromadbUrl: process.env.NUXT_CHROMADB_URL || 'http://localhost:8000',
-    chromadbAuth: process.env.NUXT_CHROMADB_AUTH || process.env.CHROMA_SERVER_AUTH_CREDENTIALS,
-    chromadbCollectionName: process.env.NUXT_CHROMADB_COLLECTION || 'pluginList',
-    discordWebhookUrl: process.env.NUXT_DISCORD_WEBHOOK_URL,
-    googleAPIKey: process.env.NUXT_GOOGLE_API_KEY,
-    spreadsheetId: process.env.NUXT_SPREADSHEET_ID,
+    openaiApiKey: '',
+    chromadbUrl: '' || 'http://localhost:8000',
+    chromadbAuth: '',
+    chromadbCollection: 'pluginList',
+    discordWebhookUrl: '',
+    googleAPIKey: '',
+    spreadsheetId: '',
   },
   googleFonts: {
     families: {

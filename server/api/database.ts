@@ -8,7 +8,7 @@ export default defineLazyEventHandler(async () => {
   const openaiApiKey = useRuntimeConfig().openaiApiKey // API key for the embedding of the query
   if (!openaiApiKey)
     throw new Error('OPENAI_API_KEY is not set')
-  if (!useRuntimeConfig().chromadbCollectionName)
+  if (!useRuntimeConfig().chromadbCollection)
     throw new Error('CHROMADB_COLLECTION is not set')
   if (!useRuntimeConfig().chromadbAuth)
     throw new Error('CHROMADB_AUTH is not set')
@@ -17,7 +17,7 @@ export default defineLazyEventHandler(async () => {
   })
   const collection = await client
     .getCollection({
-      name: useRuntimeConfig().chromadbCollectionName, // the collection name is specified in the .env file is use 'pluginList'
+      name: useRuntimeConfig().chromadbCollection, // the collection name is specified in the .env file is use 'pluginList'
       embeddingFunction: embedder,
     })
     .catch((err: Error) => {

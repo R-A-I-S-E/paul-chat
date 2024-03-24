@@ -9,7 +9,6 @@ services:
       - "5454:3000"
     environment:
       - NUXT_CHROMADB_URL=http://chroma_db:8000
-      - NUXT_CHROMADB_AUTH=${CHROMA_SERVER_AUTH_CREDENTIALS}
     env_file:
       - .env
 
@@ -20,6 +19,8 @@ services:
     volumes:
       - chroma-data:/chroma/chroma
     environment:
+      - CHROMA_SERVER_AUTH_CREDENTIALS_PROVIDER=chromadb.auth.token.TokenConfigServerAuthCredentialsProvider
+      - CHROMA_SERVER_AUTH_PROVIDER=chromadb.auth.token.TokenAuthServerProvider
       - ANONYMIZED_TELEMETRY=False
       - IS_PERSISTENT=true
     env_file:
