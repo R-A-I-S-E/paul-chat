@@ -2,17 +2,17 @@ import { google } from 'googleapis'
 import { ChromaClient, OpenAIEmbeddingFunction } from 'chromadb'
 
 interface PluginObject {
-  name: string
-  category: string
-  releaseDate: string
-  company: string
-  developers: string
-  institute: string
-  links: string
+  'name': string
+  'category': string
+  'releaseDate': string
+  'company': string
+  'developers': string
+  'institute': string
+  'links': string
   'what can you do with it?': string
   'category tag': string
   'how does it work?': string
-  technology: string
+  'technology': string
   'technical requirements': string
   'working environment': string
   'required knowledge': string
@@ -21,7 +21,7 @@ interface PluginObject {
   'cost structure': string
   'training data': string
   'documentation level': string
-  discord: string
+  'discord': string
 }
 
 async function getGoogleSheet() {
@@ -113,9 +113,7 @@ export default defineTask({
     name: 'chroma:update',
     description: 'Updates the database from google drive',
   },
-  async run({ payload, context }) {
-    // eslint-disable-next-line no-console
-    console.log(payload, context)
+  async run({ payload }) {
     if (!useRuntimeConfig().openaiApiKey)
       throw new Error('Please provide your OpenAI API key in the .env file')
     if (!useRuntimeConfig().chromadbUrl)
@@ -149,7 +147,7 @@ export default defineTask({
     })
     const count = await collection.count()
     // eslint-disable-next-line no-console
-    console.log(`the database has ${count} entries`)
+    console.log(`${payload.scheduledTime}: the database has ${count} entries`)
     return { result: 'Success' }
   },
 })
