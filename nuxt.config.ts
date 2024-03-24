@@ -8,7 +8,7 @@ export default defineNuxtConfig({
     },
     scheduledTasks: {
 
-      '* * * * *': ['chroma:update'],
+      '0 * * * *': ['chroma:update'],
     },
 
   },
