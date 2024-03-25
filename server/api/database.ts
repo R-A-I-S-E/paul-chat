@@ -16,14 +16,17 @@ export default defineLazyEventHandler(async () => {
     openai_api_key: openaiApiKey,
   })
   const collection = await client
-    .getCollection({
-      name: useRuntimeConfig().chromadbCollection, // the collection name is specified in the .env file is use 'pluginList'
+    .getOrCreateCollection({
+      name: useRuntimeConfig().chromadbCollection, 
       embeddingFunction: embedder,
     })
     .catch((err: Error) => {
       console.error('Failed to get collection:', err)
       throw err
     })
+  const count = await collection.count().catch((err: Error) => { console.error('Failed to count collection:', err); throw err })
+  if (count === 0)
+    runTask('chroma:update', { payload: { scheduledTime: new Date().toISOString() } })
 
   return defineEventHandler(async (event) => {
     const message = await readBody(event)
